@@ -5,11 +5,14 @@ namespace VehiclesGarage
     class Program
     {
         // static ConsoleUI ui = new ConsoleUI();
-        static  GarageHandler ghandler = new GarageHandler();
-        static Garage<Vehicle> garage = ghandler.CreateGarage(7);
+        //static GarageHandler ghandler = new GarageHandler();
+        //static Garage<Vehicle> garage = ghandler.CreateGarage(7);
         static void Main(string[] args)
         {
-            
+            var ghandler = new GarageHandler();
+            var garage = ghandler.CreateGarage(7);
+
+
             while (true)
             {
                 Console.WriteLine("Please navigate through the menu by inputting the number \n(1, 2, 3 ,4, 5, 6, 7, 8, 0) of your choice"
@@ -43,19 +46,20 @@ namespace VehiclesGarage
                         break;
                     case '2':
                         ghandler.PrintMessage("-------List all vehicles in the garage------");
-                        ghandler.PrintAllVehicles(garage);
+                        ghandler.PrintAllVehicles(/*garage*/);
                         ghandler.PrintMessage("-------List is ended------");
                         ghandler.PrintMessage();
                         break;
                     case '3':
                         ghandler.PrintMessage("------- Vehicles specified by type and their number in the garage ------");
-                        ghandler.ClassifyVehiclesByType(garage);
+                        ghandler.ClassifyVehiclesByType(/*garage*/);
                         ghandler.PrintMessage("-------Vehicle is found------");
-                        ghandler.PrintMessage();
+                        ghandler.PrintMessage("\n");
                         break;
                     case '4':
                         ghandler.PrintMessage("-------Find black vehicles with two wheels------");
-                        ghandler.FindVehicleCW(garage,"Black",2);
+                        //ghandler.FindVehicleCW(/*garage,*/"Black",2);
+                        ghandler.FindVehicleByProp("Black","",2);
                         ghandler.PrintMessage("------Vehicles found-------");
                         ghandler.PrintMessage();
                         break;

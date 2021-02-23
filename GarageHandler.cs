@@ -10,13 +10,14 @@ namespace VehiclesGarage
 
         private UI ui = new UI();
         private Garage<Vehicle> garage;
-        private Motorcycle m1,m2,m3;
+        private Motorcycle m1,m2,m3; // why?
         public Garage<Vehicle> CreateGarage(int capacity) 
         {
            garage = new Garage<Vehicle>(capacity) ;
            return garage;
         }
 
+        // half the number of rows by garage.Add(new Motorcycle...)
         public void PopulateGarage()
         {
             m1 = new Motorcycle("Black", 2.5, 3.5, 1.75, "Toyota", 4, "Motorcycle", 5, 6);
@@ -32,7 +33,7 @@ namespace VehiclesGarage
             Bus bus3 = new Bus("White", 2.5, 3.5, 1.75, "Renault", 4, "Bus", 6767, "Diesel");
             Car car2 = new Car("Black", 2.5, 3.5, 1.75, "Mercedes", 2, "Car", 6767, "Manual");
             Car car3 = new Car("Black", 2.5, 3.5, 1.75, "Mercedes", 2, "Car", 6767, "Manual");
-            Car car4 = new Car("Orange", 2.5, 3.5, 1.75, "Mercedes", 4, "Car", 6767, "Manual");
+            //Car car4 = new Car("Orange", 2.5, 3.5, 1.75, "Mercedes", 4, "Car", 6767, "Manual");
             garage.Add(air);
             garage.Add(boa);
             garage.Add(bus);
@@ -46,18 +47,22 @@ namespace VehiclesGarage
             garage.Add(bus3);
             garage.Add(car2);
             garage.Add(car3);
-            garage.Add(car4);
+            garage.Add(new Car("Orange", 2.5, 3.5, 1.75, "Mercedes", 4, "Car", 6767, "Manual"));
 
         }
 
 
         public void RemoveVehicle()
-        {  
+        {
             /*
              * Vehicles are not stored in the file. We get vehicles from the fly
              * and delete the three motorcycles from the list.
-             */          
-            garage.Remove(m1);
+             */
+            var reg = Console.ReadLine();
+
+            var v = garage.FirstOrDefault(v => v.RegistrationsNumber == reg);
+
+            garage.Remove(v);
             garage.Remove(m2);
             garage.Remove(m3);
 
@@ -68,12 +73,15 @@ namespace VehiclesGarage
             ui.Print(message);
         }
 
+        
+
         public void PrintMessage()
         {
             ui.Print();
         }
 
-        public void PrintAllVehicles(Garage<Vehicle> garage)
+        // Why have garage as a parameter?
+        public void PrintAllVehicles(/*Garage<Vehicle> garage*/)
         {
             foreach (var vehicle in garage)
             {
@@ -81,10 +89,13 @@ namespace VehiclesGarage
             }
         }
 
-        public void FindVehicleByRegN(Garage<Vehicle> garage,string registraNumber)
+        // Never used
+        public void FindVehicleByRegN(/*Garage<Vehicle> garage,*/string registraNumber)
         {   
             
             Vehicle[] arr = garage.InternalArray;
+            
+
             var regis = from v in arr
                       where v.RegistrationsNumber.Contains(registraNumber)
                       select v;
@@ -95,8 +106,8 @@ namespace VehiclesGarage
 
         }
 
-
-        public void ClassifyVehiclesByType(Garage<Vehicle> garage)
+        
+        public void ClassifyVehiclesByType(/*Garage<Vehicle> garage*/)
         {
 
             Dictionary<string, int> dic = new Dictionary<string, int>();
@@ -143,7 +154,7 @@ namespace VehiclesGarage
         /*
          Find vehicles based on color and number of wheels
         */
-        public void FindVehicleCW(Garage<Vehicle> garage, string color, int numberOfWheeels)
+        public void FindVehicleCW(/*Garage<Vehicle> garage,*/ string color, int numberOfWheeels)
         {
             Vehicle[] arr = garage.InternalArray;
             var xxx = from v in arr
@@ -184,7 +195,21 @@ namespace VehiclesGarage
 
         }
 
+        public void FindVehicleByProp(string type = "", string color = "", int numberOfWheels = -1)
+        {
+            var query = garage.Select(v => v);   // get all of the vehicles
 
+            if (type != ""){ query = query.Where(v => v.Type == type);}
+            if (color != ""){ query = query.Where(v => v.Color == color);}
+            if (numberOfWheels != -1){ query = query.Where(v => v.NumberOfWheels == numberOfWheels);}
+
+            var result = query.ToList();
+
+            foreach (var item in result)
+            {
+                ui.Print(item);
+            }
+        }
 
 
 

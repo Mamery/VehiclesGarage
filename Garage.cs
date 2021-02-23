@@ -12,6 +12,7 @@ namespace VehiclesGarage
         private T[] internalArray;
         private int capacity;
         private int size;
+        
 
         // public int Count { get; private set; }
 
@@ -27,6 +28,7 @@ namespace VehiclesGarage
             }
         }
 
+        // never used
         public int Size 
         { 
             get 
@@ -34,6 +36,8 @@ namespace VehiclesGarage
                 return size; 
             } 
         }
+
+        // never used
         public int Capacity
         {
             get { 
@@ -67,8 +71,18 @@ namespace VehiclesGarage
             return GetEnumerator();
         }
 
+        // Simplify
         public void Add(T item)
         {
+
+            //for (int i = 0; i < internalArray.Length; i++)
+            //{
+            //    if (internalArray[i] == null)
+            //    {
+            //        internalArray[i] = item;
+            //        size++;
+            //    }
+            //}
 
             int factor = 2;
             if (this.size == this.capacity)
@@ -85,7 +99,7 @@ namespace VehiclesGarage
         public void Remove(T item)
         {
               
-       this.internalArray = this.internalArray.Where(val => val != item).ToArray();
+            this.internalArray = this.internalArray.Where(val => val != item).ToArray();
 
         }
 

@@ -8,7 +8,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 namespace VehiclesGarage
 {
     [Serializable()]
-    class Vehicle : ISerializable
+    class Vehicle : ISerializable, IVehicle
 
     {
 
